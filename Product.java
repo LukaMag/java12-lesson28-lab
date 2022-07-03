@@ -1,15 +1,12 @@
 package CLASSWORK28LAB;
 
 public enum Product {
-        MEAT(500,ProductState.A,15),
-    DRIEDFRUIT(340,ProductState.A,25),
-        GRAIN(100,ProductState.A,35),
-        POWDER(60,ProductState.A,30),
-        FABRIC(700,ProductState.A,20),
-        PAINTING(450,ProductState.A,15);
-
-
-
+        MEAT(150,ProductState.A,25),
+    DRIEDFRUIT(100,ProductState.A,35),
+        GRAIN(30,ProductState.A,50),
+        POWDER(20,ProductState.A,45),
+        FABRIC(300,ProductState.A,40),
+        PAINTING(150,ProductState.A,25);
 
         private double price;
         private ProductState state;
@@ -43,5 +40,12 @@ public enum Product {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return "price=" + price + "\n " +
+                "state=" + state + "\n " +
+                "value=" + value + "\n ";
     }
 }
