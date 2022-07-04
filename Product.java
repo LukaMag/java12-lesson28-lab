@@ -1,18 +1,13 @@
 package CLASSWORK28LAB;
 
-public enum Product {
-        MEAT(150,ProductState.A,25),
-    DRIEDFRUIT(100,ProductState.A,35),
-        GRAIN(30,ProductState.A,50),
-        POWDER(20,ProductState.A,45),
-        FABRIC(300,ProductState.A,40),
-        PAINTING(150,ProductState.A,25);
-
+public class Product{
+        private String name;
         private double price;
         private ProductState state;
         private double value;
 
-    Product(double price, ProductState state,double value) {
+    public Product(String name, double price, ProductState state, double value) {
+        this.name = name;
         this.price = price;
         this.state = state;
         this.value = value;
@@ -40,6 +35,14 @@ public enum Product {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
