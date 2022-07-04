@@ -8,20 +8,15 @@ public class Main {
     }
     static void run(){
         Random rnd = new Random();
-//        MEAT(150,ProductState.A,25),
-//                DRIEDFRUIT(100,ProductState.A,35),
-//                GRAIN(30,ProductState.A,50),
-//                POWDER(20,ProductState.A,45),
-//                FABRIC(300,ProductState.A,40),
-//                PAINTING(150,ProductState.A,25);
+
 
         final List<Product> products = new ArrayList<>();
-        products.add(new Product("Meat",150,ProductState.A,25));
-        products.add(new Product("Dried fruit",100,ProductState.A,35));
-        products.add(new Product("Grain",30,ProductState.A,50));
-        products.add(new Product("Powder",20,ProductState.A,45));
-        products.add(new Product("Fabric",300,ProductState.A,40));
-        products.add(new Product("Painting",150,ProductState.A,25));
+        products.add(new Product("Meat",150,ProductState.A,10));
+        products.add(new Product("Dried fruit",100,ProductState.A,20));
+        products.add(new Product("Grain",30,ProductState.A,35));
+        products.add(new Product("Powder",20,ProductState.A,30));
+        products.add(new Product("Fabric",300,ProductState.A,25));
+        products.add(new Product("Painting",150,ProductState.A,10));
         Map<Integer,Product> productsMap = new HashMap<>();
         for(int i = 0; i < products.size();i++){
             productsMap.put(i,products.get(i));
@@ -51,13 +46,14 @@ public class Main {
         int diff = 2000;
         int cash = rnd.nextInt(3000);
         cash += diff;
-        Merchant merchant = new Merchant(500,cash,3,new ArrayList<Product>(), new ArrayList<Event>());
+        Merchant merchant = new Merchant(400,cash,3,new ArrayList<Product>(), new ArrayList<Event>());
         action(productsMap,merchant,city,eventsMap);
 
     }
     static void action(Map<Integer,Product> productsMap,Merchant merchant,City city,Map<Integer,Event> eventsMap){
         Random rnd = new Random();
         double merchantCapital = 0;
+        int d = 0;
         System.out.println("Merchant's cash " + merchant.getCash());
         System.out.println("Merchant is buying:");
         while (true){
@@ -98,7 +94,7 @@ public class Main {
                     merchant.getEventList().add(dailyShit);
                     System.out.println(dailyShit.getName());
                     merchant.setProducts(dailyShit.someShitHappens(merchant.getProducts(), merchant));
-                    city.setDistance(dailyShit.distancePast(merchant, city.getDistance()));
+                    city.setDistance(dailyShit.distancePast(merchant, city.getDistance(),d));
                     continue;
                 } else {
                     System.out.println("Merchant is broke((((");

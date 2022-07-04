@@ -11,12 +11,12 @@ public enum Event {
             return productsList;
         }
 
-        @Override
-        protected int distancePast(Merchant merchant, int distance) {
-            distance -= merchant.getSpeed();
-            System.out.println(String.format("Merchant has arrived %d, left distance is %d",merchant.getSpeed(),distance));
-            return distance;
-        }
+         @Override
+         protected int distancePast(Merchant merchant, int distance,int d) {
+             d = distance;
+             distance -= merchant.getSpeed();
+             return super.distancePast(merchant, distance,d);
+         }
     },
     RAINING("It's raining, speed was reduced to 2 km per hour",2){
         @Override
@@ -34,18 +34,18 @@ public enum Event {
         }
 
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
             distance -= merchant.getSpeed() - 2;
-            System.out.println(String.format("Merchant has arrived %d, left distance is %d",merchant.getSpeed() - 2,distance));
-            return distance;
+            return super.distancePast(merchant, distance,d);
         }
     },
     STRAIGHTROAD("Merchant found straight road, lucky for him ",3){
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
             distance -= merchant.getSpeed() + 2;
-            System.out.println(String.format("Merchant has arrived %d, left distance is %d",merchant.getSpeed() + 2,distance));
-            return distance;
+            return super.distancePast(merchant, distance,d);
         }
 
         @Override
@@ -60,8 +60,10 @@ public enum Event {
         }
 
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
-            return super.distancePast(merchant, distance);
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
+            distance -= merchant.getSpeed();
+            return super.distancePast(merchant, distance,d);
         }
     },
     RIVER("River has become a big problem, day was spent for free",5){
@@ -71,17 +73,19 @@ public enum Event {
         }
 
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
-            return super.distancePast(merchant, distance);
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
+            distance -= merchant.getSpeed();
+            return super.distancePast(merchant, distance,d);
         }
     },
     METSTRANGER("Merchant have met aboriginal",6){
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
+        protected int distancePast(Merchant merchant, int distance,int d) {
             int rndDistance = rnd.nextInt(4) + 3;
+            d = distance;
             distance -= merchant.getSpeed() + rndDistance;
-            System.out.println(String.format("Merchant has arrived %d, left distance is %d",merchant.getSpeed() + rndDistance,distance));
-            return distance;
+            return super.distancePast(merchant,distance,d);
         }
 
         @Override
@@ -108,10 +112,10 @@ public enum Event {
         }
 
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
             distance -= merchant.getSpeed();
-            System.out.println(String.format("Merchant has arrived %d, left distance is %d",merchant.getSpeed(),distance));
-            return distance;
+            return super.distancePast(merchant,distance,d);
         }
     },
     INN("Merchant have met roadside inn",8){
@@ -138,14 +142,15 @@ public enum Event {
         }
 
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
             int payForNight = 50;
             int payForMeal = 25;
             if (merchant.getCash() > payForMeal + payForNight) {
 
             } else {
                 distance -= merchant.getSpeed();
-                System.out.println(String.format("Merchant has arrived %d, left distance is %d", merchant.getSpeed(), distance));
+                return super.distancePast(merchant,distance,d);
 
             }
             return distance;
@@ -165,10 +170,10 @@ public enum Event {
         }
 
         @Override
-        protected int distancePast(Merchant merchant, int distance) {
+        protected int distancePast(Merchant merchant, int distance,int d) {
+            d = distance;
             distance -= merchant.getSpeed();
-            System.out.println(String.format("Merchant has arrived %d, left distance is %d",merchant.getSpeed(),distance));
-            return distance;
+            return super.distancePast(merchant, distance,d);
         }
     };
     public final Random rnd = new Random();
@@ -207,7 +212,13 @@ public enum Event {
     protected List<Product> someShitHappens(List<Product> productsList, Merchant merchant){
        return productsList;
     }
-    protected int distancePast(Merchant merchant,int distance){
+    protected int distancePast(Merchant merchant,int distance,int d){
+        if(distance <=0){
+            System.out.println("Merchant arrived a town");
+        }else {
+            System.out.println(String.format("Merchant has arrived %d, left distance is %d", d - distance, distance));
+
+        }
         return distance;
     }
 }
